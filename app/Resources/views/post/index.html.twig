@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main class="col col-md-6 offset-md-3">
+        <nav aria-label="breadcrumb" role="navigation" class="mt-3">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Home</a></li>
+            <li class="breadcrumb-item active">List</li>
+          </ol>
+        </nav>
+
+        <div class="card mt-2">
+          <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td scope="row"><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></td>
+                        <td>{{ post.title }}</td>
+                        <td>
+                            <div class="btn-toolbar float-right" role="toolbar">
+                              <div class="btn-group btn-group-sm mr-2" role="group">
+                                    <a class="btn btn-secondary" href="{{ path('post_edit', { 'id': post.id }) }}"><i class="material-icons">create</i></a>
+                                    <a class="btn btn-secondary" href="{{ path('post_show', { 'id': post.id }) }}"><i class="material-icons">open_in_new</i></a>
+                              </div>    
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                  </tbody>
+                </table>
+
+                <a href="{{ path('post_new') }}" class="btn btn-primary btn-lg btn-block">Create a new post</a>
+            </div>
+          </div>
+        </div>
+
+
+    </main>
+
+
+{% endblock %}
