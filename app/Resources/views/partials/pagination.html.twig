@@ -1,0 +1,21 @@
+{% spaceless %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page > 1 %}
+            <li class="page-item"><a class="page-link" href="{{ path(route, app.request.query.all|merge({ page: 1 })) }}">First</a></li>
+        {% endif %}
+        {% if (page-1) > 1 %}
+            <li class="page-item"><a class="page-link" href="{{ path(route, app.request.query.all|merge({ page: (page-1) })) }}">Previous</a></li>
+        {% endif %}
+        {% for i in 1..pages %}
+            <li class="page-item{% if page == i %} active{% endif %}"><a class="page-link" href="{{ path(route, app.request.query.all|merge({ page: i })) }}">{{ i }}</a></li>
+        {% endfor %}
+        {% if (page+1) < pages %}
+            <li class="page-item"><a class="page-link" href="{{ path(route, app.request.query.all|merge({ page: (page+1) })) }}">Next</a></li>
+        {% endif %}
+        {% if page < pages %}
+            <li class="page-item"><a class="page-link" href="{{ path(route, app.request.query.all|merge({ page: pages })) }}">Last</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endspaceless %}

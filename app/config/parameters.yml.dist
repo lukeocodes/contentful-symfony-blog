@@ -17,3 +17,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    contentful_space_id: f470av0sthxt
+    contentful_delivery_token: '%env(CONTENTFUL_DELIVERY_TOKEN)%'

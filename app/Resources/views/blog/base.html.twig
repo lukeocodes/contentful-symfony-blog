@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <main role="main" class="container  mt-3">
+
+    {% block breadcrumbs %}
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Home</a></li>
+        {% block breadcrumbsbody %}
+                <li class="breadcrumb-item"><a href="{{ path('blog_index', app.request.query.all) }}">Blog</a></li>
+        {% endblock %}
+            </ol>
+        </nav>
+    {% endblock %}
+        <div class="row mt-3">
+            <div class="col-sm-8 blog-main">
+
+    {% block blogbody %}
+    {% endblock %}
+
+            </div><!-- /.blog-main -->
+            <aside class="col-sm-3 ml-sm-auto blog-sidebar">
+                <div class="sidebar-module text-center">
+                    <h4>Archives</h4>
+                    {{ render(controller('AppBundle:Blog:archivesPartial')) }}
+                </div>
+                <div class="sidebar-module text-center">
+                    <h4>Categories</h4>
+                    {{ render(controller('AppBundle:Blog:categoriesPartial')) }}
+                </div>
+            {% set authorParams = {} %}
+            {% if author is defined %}
+                {% set authorParams = { author: author }|merge(authorParams) %}
+            {% endif %}
+            {% if app.request.query.get('author') is not null %}
+                {% set authorParams = { authorName: app.request.query.get('author') }|merge(authorParams) %}
+            {% endif %}
+            {% if authorParams is not empty %}
+                <hr />
+                <div class="sidebar-module text-center">
+                    {{ render(controller('AppBundle:Blog:authorPartial', authorParams)) }}
+                </div>
+            {% endif %}
+            </aside><!-- /.blog-sidebar -->
+        </div><!-- /.row -->
+    </main><!-- /.container -->
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'blog/base.html.twig' %}
+
+{% block breadcrumbsbody %}
+    <li class="breadcrumb-item active">Blog</li>
+{% endblock %}
+
+{% block blogbody %}
+    {% for entry in entries %}
+        {% set url = path('blog_entry', app.request.query.all|merge({ year: entry.getCreatedAt().format('Y'), month: entry.getCreatedAt().format('m'), slug: entry.getSlug() })) %}
+        {% if loop.first == false %}
+                <hr />
+        {% endif %}
+                <div class="blog-post">
+                    <a class="h2 blog-post-title" href="{{ url }}">{{ entry.getTitle() }}</a>
+                    <p class="blog-post-meta">{{ entry.getCreatedAt().format('d F, Y \\a\\t H:i') }} by <a href="{{ path('blog_index', { author: entry.getAuthor()[0].getName() }) }}">{{ entry.getAuthor()[0].getName() }}</a></p>
+                    {{ entry.getBody()|markdown|truncate(500, '...<br /><a class="badge badge-light" href="' ~ url ~ '">read more</a>', false, false) }}
+                </div><!-- /.blog-post -->
+    {% endfor %}
+    {% include 'partials/pagination.html.twig' %}
+{% endblock %}

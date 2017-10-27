@@ -1,0 +1,8 @@
+<ol class="list-unstyled">
+{% for year, months in archives %}
+    {% for month, dateString in months %}
+        {% set url = path('blog_archive', { year: year, month: month }) %}
+    <li><a href="{{ url }}">{{ dateString }}</a></li>
+    {% endfor %}
+{% endfor %}
+</ol>

@@ -1,0 +1,16 @@
+{% extends 'blog/base.html.twig' %}
+
+{% block breadcrumbsbody %}
+    {{ parent() }}
+    <li class="breadcrumb-item active">{{ entry.getTitle() }}</li>
+{% endblock %}
+
+{% block blogbody %}
+    {% set date = entry.getCreatedAt() %}
+    {% set url = path('blog_entry', { year: date.format('Y'), month: date.format('m'), slug: entry.getSlug() }) %}
+                <div class="blog-post">
+                    <a class="h2 blog-post-title" href="{{ url }}">{{ entry.getTitle() }}</a>
+                    <p class="blog-post-meta">{{ date.format('d F, Y \\a\\t H:i') }}{% if entry.getAuthor()[0] %} by <a href="{{ path('blog_index', { author: entry.getAuthor()[0].getName() }) }}">{{ entry.getAuthor()[0].getName() }}</a>{% endif %}</p>
+                    {{ entry.getBody()|markdown }}
+                </div><!-- /.blog-post -->
+{% endblock %}
